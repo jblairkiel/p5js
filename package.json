@@ -1,0 +1,24 @@
+{
+  "name": "p5js",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "live-server --cors"
+  },
+  "files": [
+    "lib",
+    "bin",
+    "doc",
+    "assets"
+  ],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "http-server": "^14.1.1",
+    "light-server": "^2.9.1",
+    "live-server": "^1.2.2"
+  }
+}
