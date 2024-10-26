@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>2D Ellipses</title>
+    <script src="https://cdn.jsdelivr.net/npm/p5@1.11.0/lib/p5.min.js"></script>
+    <style>
+        :root {
+            --primary-color: #2563eb;
+            --hover-color: #1e40af;
+            --bg-color: #f8fafc;
+            --text-color: #1e293b;
+        }
+
+        body {
+            font-family: system-ui, -apple-system, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .breadcrumb {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 2rem;
+            font-size: 0.875rem;
+        }
+
+        .breadcrumb a {
+            color: var(--primary-color);
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        .breadcrumb a:hover {
+            color: var(--hover-color);
+        }
+
+        .breadcrumb-separator {
+            color: #64748b;
+        }
+
+        .project-header {
+            background: white;
+            padding: 2rem;
+            border-radius: 1rem;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+            margin-bottom: 2rem;
+        }
+
+        .project-title {
+            font-size: 2.5rem;
+            margin: 0 0 1rem 0;
+            color: var(--primary-color);
+        }
+
+        .tags {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        .tag {
+            background-color: #e2e8f0;
+            padding: 0.25rem 0.75rem;
+            border-radius: 1rem;
+            font-size: 0.875rem;
+            color: #475569;
+        }
+
+        .project-content {
+            display: grid;
+            gap: 2rem;
+        }
+
+        .content-section {
+            background: white;
+            padding: 2rem;
+            border-radius: 1rem;
+            box-shadow: 0 2px 4px -1px rgb(0 0 0 / 0.1);
+            animation: fadeIn 0.5s ease-out;
+        }
+
+        .section-title {
+            font-size: 1.5rem;
+            color: var(--primary-color);
+            margin: 0 0 1rem 0;
+        }
+
+        .preview-image {
+            width: 100%;
+            height: 300px;
+            background-color: #e2e8f0;
+            border-radius: 0.5rem;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #64748b;
+        }
+
+        .feature-list {
+            display: grid;
+            gap: 1rem;
+            padding: 0;
+            list-style: none;
+        }
+
+        .feature-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+            padding: 1rem;
+            background-color: #f8fafc;
+            border-radius: 0.5rem;
+            transition: transform 0.2s;
+        }
+
+        .feature-item:hover {
+            transform: translateX(4px);
+        }
+
+        .feature-icon {
+            background-color: var(--primary-color);
+            color: white;
+            width: 2rem;
+            height: 2rem;
+            border-radius: 0.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .demo-link {
+            display: inline-block;
+            padding: 0.75rem 1.5rem;
+            background-color: var(--primary-color);
+            color: white;
+            text-decoration: none;
+            border-radius: 0.5rem;
+            transition: background-color 0.2s;
+            margin-top: 1rem;
+        }
+
+        .demo-link:hover {
+            background-color: var(--hover-color);
+        }
+
+        .tech-stack {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 1rem;
+        }
+
+        .tech-item {
+            background-color: #f8fafc;
+            padding: 1rem;
+            border-radius: 0.5rem;
+            text-align: center;
+            transition: transform 0.2s;
+        }
+
+        .tech-item:hover {
+            transform: translateY(-2px);
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @media (max-width: 640px) {
+            .container {
+                padding: 1rem;
+            }
+            
+            .project-header {
+                padding: 1.5rem 1rem;
+            }
+
+            .project-title {
+                font-size: 2rem;
+            }
+
+            .content-section {
+                padding: 1.5rem 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <nav class="breadcrumb">
+            <a href="../../index.html">Projects</a>
+            <span class="breadcrumb-separator">/</span>
+            <span id="projectName">2D Ellipses</span>
+        </nav>
+
+        <header class="project-header">
+            <h1 class="project-title" id="title">2D Ellipses</h1>
+            <div class="tags" id="tags">
+                <!-- Tags will be dynamically inserted here -->
+            </div>
+        </header>
+
+        <div class="project-content">
+            <section class="content-section">
+                <h2 class="section-title">2D Ellipses</h2>
+                <main>
+                  <div style="width:max-content;"></div>
+                  <script src="ellipses.js"></script>
+                </main>
+                <p id="description">Project description will be inserted here.</p>
+                <a href="#" class="demo-link">View Live Demo</a>
+            </section>
+
+            <section class="content-section">
+                <h2 class="section-title">Key Features</h2>
+                <ul class="feature-list" id="features">
+                    <!-- Features will be dynamically inserted here -->
+                </ul>
+            </section>
+
+            <section class="content-section">
+                <h2 class="section-title">Technology Stack</h2>
+                <div class="tech-stack" id="techStack">
+                    <!-- Tech stack will be dynamically inserted here -->
+                </div>
+            </section>
+        </div>
+    </div>
+
+    <script>
+        // Sample project data - in a real application, this would be loaded dynamically
+        const project = {
+            title: "2D Elipses",
+            tags: ["2D", "Ellipses"],
+            description: "A comprehensive dashboard for e-commerce analytics and management. This project provides real-time insights into sales, inventory, and customer behavior, helping businesses make data-driven decisions.",
+            features: [
+                "Real-time sales tracking and analytics",
+                "Inventory management system",
+                "Customer behavior analysis",
+                "Automated reporting system",
+                "Multi-user access control"
+            ],
+            techStack: [
+                "p5.js",
+            ]
+        };
+
+        function initialize() {
+            // Update breadcrumb and title
+            document.getElementById('projectName').textContent = project.title;
+            document.getElementById('title').textContent = project.title;
+            document.getElementById('description').textContent = project.description;
+
+            // Render tags
+            document.getElementById('tags').innerHTML = project.tags
+                .map(tag => `<span class="tag">${tag}</span>`)
+                .join('');
+
+            // Render features
+            document.getElementById('features').innerHTML = project.features
+                .map(feature => `
+                    <li class="feature-item">
+                        <span class="feature-icon">✓</span>
+                        <span>${feature}</span>
+                    </li>
+                `).join('');
+
+            // Render tech stack
+            document.getElementById('techStack').innerHTML = project.techStack
+                .map(tech => `
+                    <div class="tech-item">
+                        ${tech}
+                    </div>
+                `).join('');
+        }
+
+        // Initialize the page
+        document.addEventListener('DOMContentLoaded', initialize);
+    </script>
+</body>
+</html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>p5.js example</title>
+  <style>
+    body {
+      padding: 0;
+      margin: 0;
+      background-color: #ffffff;
+    }
+  </style>
+  <script src="https://cdn.jsdelivr.net/npm/p5@1.11.0/lib/p5.min.js"></script>
+</head>
+
+<body>
+  <main>
+    <script src="ellipses.js"></script>
+  </main>
+</body>
+
+</html>

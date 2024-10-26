@@ -1,7 +1,367 @@
 <!DOCTYPE html>
 <html lang="en">
-<div>
-    <ul>
-        <li><a  href="proj/ellipses.html">Ellipses</a></li>
-    </ul>
-</div>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project Portfolio</title>
+    <style>
+        :root {
+            --primary-color: #2563eb;
+            --hover-color: #1e40af;
+            --bg-color: #f8fafc;
+            --text-color: #1e293b;
+        }
+
+        body {
+            font-family: system-ui, -apple-system, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 3rem;
+            padding: 2rem;
+            background: white;
+            border-radius: 1rem;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            color: var(--primary-color);
+        }
+
+        .description {
+            font-size: 1.1rem;
+            color: #64748b;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .controls {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .search-box {
+            padding: 0.5rem 1rem;
+            border: 2px solid #e2e8f0;
+            border-radius: 0.5rem;
+            font-size: 1rem;
+            width: 250px;
+            transition: border-color 0.2s;
+        }
+
+        .search-box:focus {
+            outline: none;
+            border-color: var(--primary-color);
+        }
+
+        .filter-tags {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+
+        .filter-tag {
+            background-color: #e2e8f0;
+            padding: 0.25rem 0.75rem;
+            border-radius: 1rem;
+            font-size: 0.875rem;
+            color: #475569;
+            cursor: pointer;
+            transition: all 0.2s;
+            user-select: none;
+        }
+
+        .filter-tag.active {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        .projects {
+            display: grid;
+            gap: 1.5rem;
+        }
+
+        .project-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 0.5rem;
+            box-shadow: 0 2px 4px -1px rgb(0 0 0 / 0.1);
+            transition: all 0.3s;
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .project-card.hidden {
+            display: none;
+        }
+
+        .project-card.fade-out {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        .project-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 16px -4px rgb(0 0 0 / 0.15);
+        }
+
+        .project-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin: 0 0 0.5rem 0;
+            color: var(--primary-color);
+        }
+
+        .project-description {
+            color: #64748b;
+            margin-bottom: 1rem;
+        }
+
+        .project-link {
+            display: inline-block;
+            padding: 0.5rem 1rem;
+            background-color: var(--primary-color);
+            color: white;
+            text-decoration: none;
+            border-radius: 0.25rem;
+            transition: background-color 0.2s;
+        }
+
+        .project-link:hover {
+            background-color: var(--hover-color);
+        }
+
+        .tags {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .tag {
+            background-color: #e2e8f0;
+            padding: 0.25rem 0.75rem;
+            border-radius: 1rem;
+            font-size: 0.875rem;
+            color: #475569;
+        }
+
+        .toggle-view {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 0.5rem;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+
+        .toggle-view:hover {
+            background-color: var(--hover-color);
+        }
+
+        .grid-view {
+            display: grid;
+            gap: 1.5rem;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+        }
+
+        .list-view {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .no-results {
+            text-align: center;
+            padding: 2rem;
+            color: #64748b;
+            font-size: 1.1rem;
+        }
+
+        @media (max-width: 640px) {
+            .container {
+                padding: 1rem;
+            }
+            
+            header {
+                padding: 1.5rem 1rem;
+            }
+
+            h1 {
+                font-size: 2rem;
+            }
+
+            .controls {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .search-box {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Blair's P5Js Projects</h1>
+            <p class="description">A collection of p5js projects showcasing various technologies and solutions.</p>
+        </header>
+
+        <div class="controls">
+            <input type="text" class="search-box" placeholder="Search projects..." id="searchBox">
+            <div class="filter-tags" id="filterTags">
+                <!-- Tags will be dynamically inserted here -->
+            </div>
+            <button class="toggle-view" id="toggleView">Toggle View</button>
+        </div>
+
+        <div class="projects grid-view" id="projectsList">
+            <!-- Projects will be dynamically inserted here -->
+        </div>
+    </div>
+
+    <script>
+        const projects = [
+            {
+                title: "2D Ellipses",
+                description: "A project showcasing 2D ellipses and them changing color.",
+                link: "proj/ellipses/index.html",
+                tags: ["2D", "Ellipses"]
+            },
+            {
+                title: "3D Ellipses",
+                description: "A project showcasing 3D ellipses and them changing color.",
+                link: "proj/webgl_ellipses/index.html",
+                tags: ["3D", "Ellipses"]
+            },
+        ];
+
+        // Get all unique tags
+        const allTags = [...new Set(projects.flatMap(project => project.tags))];
+        let activeFilters = new Set();
+        let isGridView = true;
+
+        function createProjectCard(project) {
+            return `
+                <div class="project-card">
+                    <h2 class="project-title">${project.title}</h2>
+                    <div class="tags">
+                        ${project.tags.map(tag => `<span class="tag">${tag}</span>`).join('')}
+                    </div>
+                    <p class="project-description">${project.description}</p>
+                    <a href="${project.link}" class="project-link">View Project</a>
+                </div>
+            `;
+        }
+
+        function renderFilterTags() {
+            const filterTagsContainer = document.getElementById('filterTags');
+            filterTagsContainer.innerHTML = allTags
+                .map(tag => `<span class="filter-tag" data-tag="${tag}">${tag}</span>`)
+                .join('');
+
+            // Add click handlers to filter tags
+            document.querySelectorAll('.filter-tag').forEach(tag => {
+                tag.addEventListener('click', () => {
+                    tag.classList.toggle('active');
+                    const tagValue = tag.dataset.tag;
+                    if (activeFilters.has(tagValue)) {
+                        activeFilters.delete(tagValue);
+                    } else {
+                        activeFilters.add(tagValue);
+                    }
+                    filterProjects();
+                });
+            });
+        }
+
+        function filterProjects() {
+            const searchTerm = document.getElementById('searchBox').value.toLowerCase();
+            const projectCards = document.querySelectorAll('.project-card');
+            let hasVisibleProjects = false;
+
+            projectCards.forEach((card, index) => {
+                const project = projects[index];
+                const matchesSearch = project.title.toLowerCase().includes(searchTerm) ||
+                                    project.description.toLowerCase().includes(searchTerm);
+                const matchesFilter = activeFilters.size === 0 ||
+                                    project.tags.some(tag => activeFilters.has(tag));
+
+                if (matchesSearch && matchesFilter) {
+                    card.classList.remove('hidden');
+                    hasVisibleProjects = true;
+                } else {
+                    card.classList.add('hidden');
+                }
+            });
+
+            // Show "no results" message if needed
+            let noResultsEl = document.querySelector('.no-results');
+            if (!hasVisibleProjects) {
+                if (!noResultsEl) {
+                    noResultsEl = document.createElement('div');
+                    noResultsEl.className = 'no-results';
+                    noResultsEl.textContent = 'No projects match your search criteria.';
+                    document.getElementById('projectsList').appendChild(noResultsEl);
+                }
+            } else if (noResultsEl) {
+                noResultsEl.remove();
+            }
+        }
+
+        function toggleView() {
+            const projectsList = document.getElementById('projectsList');
+            isGridView = !isGridView;
+            projectsList.className = `projects ${isGridView ? 'grid-view' : 'list-view'}`;
+        }
+
+        function initialize() {
+            // Render projects
+            const projectsList = document.getElementById('projectsList');
+            projectsList.innerHTML = projects.map(project => createProjectCard(project)).join('');
+
+            // Render filter tags
+            renderFilterTags();
+
+            // Add search functionality
+            document.getElementById('searchBox').addEventListener('input', filterProjects);
+
+            // Add view toggle functionality
+            document.getElementById('toggleView').addEventListener('click', toggleView);
+
+            // Add smooth transitions for filtering
+            document.getElementById('projectsList').addEventListener('transitionend', (e) => {
+                if (e.target.classList.contains('project-card') && e.propertyName === 'opacity') {
+                    if (e.target.classList.contains('fade-out')) {
+                        e.target.classList.add('hidden');
+                    }
+                }
+            });
+        }
+
+        // Initialize the page
+        document.addEventListener('DOMContentLoaded', initialize);
+    </script>
+</body>
+</html>
